@@ -9,23 +9,35 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class SecondActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_second);
 
-        Button btnEnvoyer = (Button) findViewById(R.id.btnEnvoyer);
-        btnEnvoyer.setOnClickListener(btnEnvoyerOnClickListener);
+        // Question b) //
+        /*
+        Intent intent = getIntent();
+        String var = "";
+        if (intent != null) {
+            var = intent.getStringExtra("variable") ;
+            TextView textView = (TextView) findViewById(R.id.textView1);
+            textView.setText(var);
+        }*/
 
-        Button btnAct2 = (Button) findViewById(R.id.btnAct2);
-        btnAct2.setOnClickListener(btnAct2OnClickListener);
+        // Question c) //
 
-        Button btnQuitter = (Button) findViewById(R.id.btnQuitter);
-        btnQuitter.setOnClickListener(btnQuitterOnClickListener);
+        onRestoreInstanceState(savedInstanceState);
+
+        if (savedInstanceState != null){
+            String var = savedInstanceState.getString("variableBundle");
+            TextView textView = (TextView) findViewById(R.id.textView1);
+            textView.setText(var);
+        }
 
         popUp("onCreate()");
     }
@@ -60,8 +72,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         popUp("onResume()");
-        SharedPreferences settings = getSharedPreferences("cycle_vie_prefs", Context.MODE_PRIVATE);
-        setTxTValeur(settings.getString("valeur", ""));
     }
     /** =============================================================
      * La fonction onPause() est suivie :
@@ -80,10 +90,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             popUp("onPause, l'utilisateur n'a pas demandé la fermeture via un finish()");
         }
-        SharedPreferences settings = getSharedPreferences("cycle_vie_prefs", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString("valeur", getTxtValeur());
-        editor.commit();
     }
     /** ==============================================================
      * La fonction onStop() est exécutée :
@@ -112,50 +118,12 @@ public class MainActivity extends AppCompatActivity {
         popUp("onDestroy()");
     }
 
-    //=================================================================//
-
-    View.OnClickListener btnQuitterOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            finish();
-        }
-    };
-
-    View.OnClickListener btnEnvoyerOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            popUp("valeur saisie = " + getTxtValeur());
-        }
-    };
-
-    View.OnClickListener btnAct2OnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(v.getContext(), SecondActivity.class);
-            //Question b)
-            //intent.putExtra("variable",getTxtValeur());
-            startActivity(intent);
-        }
-    };
-
-    //=================================================================//
-
     public void popUp(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, message+" from activity 2", Toast.LENGTH_LONG).show();
     }
 
-    public String getTxtValeur() {
-        EditText zoneValeur = (EditText) findViewById(R.id.editTxtValeur);
-        return zoneValeur.getText().toString();
-    }
-
-    public void setTxTValeur(String valeur) {
-        EditText zoneValeur = (EditText) findViewById(R.id.editTxtValeur);
-        zoneValeur.setText(valeur);
-    }
-
-    protected void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putString("variableBundle", getTxtValeur());
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        String valeur = savedInstanceState.getString("variableBundle");
     }
 }

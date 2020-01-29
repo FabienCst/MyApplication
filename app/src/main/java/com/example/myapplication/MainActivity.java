@@ -22,7 +22,14 @@ public class MainActivity extends AppCompatActivity {
         btnEnvoyer.setOnClickListener(btnEnvoyerOnClickListener);
 
         Button btnAct2 = (Button) findViewById(R.id.btnAct2);
-        btnAct2.setOnClickListener(btnAct2OnClickListener);
+        btnAct2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), SecondActivity.class);
+                intent.putExtra("variable",getTxtValeur());
+                startActivity(intent);
+            }
+        });
 
         Button btnQuitter = (Button) findViewById(R.id.btnQuitter);
         btnQuitter.setOnClickListener(btnQuitterOnClickListener);
@@ -82,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         }
         SharedPreferences settings = getSharedPreferences("cycle_vie_prefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putString("valeur", getTxtValeur());
+        editor.putString("variable", getTxtValeur());
         editor.commit();
     }
     /** ==============================================================
@@ -125,16 +132,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             popUp("valeur saisie = " + getTxtValeur());
-        }
-    };
-
-    View.OnClickListener btnAct2OnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(v.getContext(), SecondActivity.class);
-            //Question b)
-            //intent.putExtra("variable",getTxtValeur());
-            startActivity(intent);
         }
     };
 

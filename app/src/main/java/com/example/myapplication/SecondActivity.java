@@ -19,25 +19,29 @@ public class SecondActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
 
+        TextView textView = (TextView) findViewById(R.id.textView1);
+
+        // Question a) //
+
+        SharedPreferences settings = getSharedPreferences("cycle_vie_prefs", Context.MODE_PRIVATE);
+        String varA = settings.getString("variable","");
+        textView.setText("Valeur : "+varA);
+
         // Question b) //
-        /*
+
         Intent intent = getIntent();
-        String var = "";
+        String varB = "";
         if (intent != null) {
-            var = intent.getStringExtra("variable") ;
-            TextView textView = (TextView) findViewById(R.id.textView1);
-            textView.setText(var);
-        }*/
+            varB = intent.getStringExtra("variable") ;
+            textView.setText("Valeur : "+varB);
+        }
 
         // Question c) //
 
-        onRestoreInstanceState(savedInstanceState);
-
-        if (savedInstanceState != null){
-            String var = savedInstanceState.getString("variableBundle");
-            TextView textView = (TextView) findViewById(R.id.textView1);
-            textView.setText(var);
-        }
+//        if (savedInstanceState != null){
+//            String varC = savedInstanceState.getString("variableBundle");
+//            textView.setText("Valeur : "+varC);
+//        }
 
         popUp("onCreate()");
     }

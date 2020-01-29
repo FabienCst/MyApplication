@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 public class SecondActivity extends AppCompatActivity {
 
+    final String CYCLEVIEPREFS = "cycle_vie_prefs";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,8 +25,8 @@ public class SecondActivity extends AppCompatActivity {
 
         // Question a) //
 
-        SharedPreferences settings = getSharedPreferences("cycle_vie_prefs", Context.MODE_PRIVATE);
-        String varA = settings.getString("variable","");
+        SharedPreferences settings = getSharedPreferences(CYCLEVIEPREFS, Context.MODE_PRIVATE);
+        String varA = settings.getString("variableA","");
         textView.setText("Valeur : "+varA);
 
         // Question b) //
@@ -32,7 +34,7 @@ public class SecondActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String varB = "";
         if (intent != null) {
-            varB = intent.getStringExtra("variable") ;
+            varB = intent.getStringExtra("variableB") ;
             textView.setText("Valeur : "+varB);
         }
 
@@ -123,7 +125,7 @@ public class SecondActivity extends AppCompatActivity {
     }
 
     public void popUp(String message) {
-        Toast.makeText(this, message+" from activity 2", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, message+" depuis l'activité 2", Toast.LENGTH_LONG).show();
     }
 
     public void onRestoreInstanceState(Bundle savedInstanceState) {

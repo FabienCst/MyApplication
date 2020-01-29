@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+    final String CYCLEVIEPREFS = "cycle_vie_prefs";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), SecondActivity.class);
-                intent.putExtra("variable",getTxtValeur());
+                intent.putExtra("variableB",getTxtValeur());
                 startActivity(intent);
             }
         });
@@ -67,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         popUp("onResume()");
-        SharedPreferences settings = getSharedPreferences("cycle_vie_prefs", Context.MODE_PRIVATE);
-        setTxTValeur(settings.getString("valeur", ""));
+        SharedPreferences settings = getSharedPreferences(CYCLEVIEPREFS, Context.MODE_PRIVATE);
+        setTxTValeur(settings.getString("variableA", ""));
     }
     /** =============================================================
      * La fonction onPause() est suivie :
@@ -87,9 +89,9 @@ public class MainActivity extends AppCompatActivity {
         } else {
             popUp("onPause, l'utilisateur n'a pas demandé la fermeture via un finish()");
         }
-        SharedPreferences settings = getSharedPreferences("cycle_vie_prefs", Context.MODE_PRIVATE);
+        SharedPreferences settings = getSharedPreferences(CYCLEVIEPREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putString("variable", getTxtValeur());
+        editor.putString("variableA", getTxtValeur());
         editor.commit();
     }
     /** ==============================================================
